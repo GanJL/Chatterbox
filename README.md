@@ -9,7 +9,7 @@
 
     * Quick Walkthrough: 
 
-    * ![Alt Text](https://github.com/GanJL/Task-Manager/blob/main/task-manager/client/src/icons/Task%20Manager%20-%20Google%20Chrome%202022-03-02%2023-03-39.gif?raw=true)
+    * ![Alt Text](https://github.com/GanJL/Chatterbox/blob/main/public/icons/video2952305050.gif?raw=true)
 
 ### Implemented with the following tools:
 
