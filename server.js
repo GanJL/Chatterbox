@@ -12,9 +12,12 @@ const chatBot = 'ChatterBot'
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+// on client load, activate socket
+
 io.on('connection', socket => {
     console.log("New web socket connection");
 
+    // on receipt of joinRoom from main, activate function
     socket.on('joinRoom', ({username, room }) => {
 
         const user = userJoin(socket.id, username, room)
@@ -22,13 +25,15 @@ io.on('connection', socket => {
 
         socket.emit('message', formatMessage(chatBot,'Welcome to Chatterbox!'));
 
+        // broadcast to all clients in the server
         socket.broadcast
         .to(user.room)
         .emit('message', formatMessage(
             chatBot,`${user.username} has joined the chat!`
             )
         );
-
+        
+        // send to clients in the room
         io.to(user.room).emit('roomUsers', {
             room: user.room,
             users: getRoomUsers(user.room)
@@ -37,7 +42,7 @@ io.on('connection', socket => {
     })
 
     
-
+    // on client disconnect, broadcast user leaving and update room and users info
     socket.on('disconnect', ()=>{
 
         const user = userLeave(socket.id)
@@ -55,6 +60,7 @@ io.on('connection', socket => {
         
     });
 
+    // get current user and process message for main
     socket.on('chatMsg', (msg) => {
 
         const user = getCurrentUser(socket.id)
